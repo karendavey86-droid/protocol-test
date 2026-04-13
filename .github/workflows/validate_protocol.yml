@@ -1,0 +1,70 @@
+name: Validate README protocol
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - README.md
+      - legacy/source.txt
+      - scripts/validate_protocol.py
+      - tests/test_validate_protocol.py
+      - .github/workflows/validate_protocol.yml
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+      - legacy/source.txt
+      - scripts/validate_protocol.py
+      - tests/test_validate_protocol.py
+      - .github/workflows/validate_protocol.yml
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check whether validation should run
+        id: validation_gate
+        run: |
+          set -euo pipefail
+          if ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            echo "should_validate=true" >> "$GITHUB_OUTPUT"
+            echo "Validation will run: no previous commit exists."
+            exit 0
+          fi
+
+          previous_commit="$(git rev-parse HEAD^)"
+
+          if git diff --quiet "$previous_commit" HEAD -- README.md; then
+            echo "should_validate=false" >> "$GITHUB_OUTPUT"
+            echo "Validation skipped: README.md is unchanged from the previous commit."
+            exit 0
+          fi
+
+          echo "should_validate=true" >> "$GITHUB_OUTPUT"
+
+      - name: Run validator tests
+        if: steps.validation_gate.outputs.should_validate == 'true'
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Run protocol validation
+        if: steps.validation_gate.outputs.should_validate == 'true'
+        run: |
+          if [ -f legacy/source.txt ]; then
+            python scripts/validate_protocol.py README.md legacy/source.txt
+          else
+            python scripts/validate_protocol.py README.md
+          fi
