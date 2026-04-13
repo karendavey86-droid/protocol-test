@@ -38,7 +38,9 @@ Protocol for 3’ end RNA-seq using a template switching reverse transcription w
 
 - Prepare fragmentation buffer.
 - Fragmentation buffer: 80 mM Tris-HCl pH 7.5, 40 mM MgCl₂.
+  
 > **Note**: have more recently been using milder fragmentation buffer conditions with input concentration of 10 mM Tris-HCl pH 7.5, 5 mM MgCl₂ (final concentration 1.25 mM Tris-HCl and 0.625 mM MgCl₂).
+
 - Use 500 ng of RNA (whenever possible).
 - Bring to 3.5 µL using water.
 - Add 0.5 µL of fragmentation buffer (10 mM Tris-HCl pH 7.5, 5 mM MgCl₂ final concentration).
