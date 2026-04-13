@@ -55,14 +55,10 @@ Protocol for 3’ end RNA-seq using a template switching reverse transcription w
 # 3. Template switching RT incubation and cleanup
 
 - Make a mastermix and add 5.5 µL of the following:
-  - 2 µL of SSIV buffer
-  - 2 µL 5 M betaine
-  - 0.5 µL 0.1 M DTT
-  - 0.25 µL 40 µM TSO
-  - 0.25 µL 200 mM MgCl₂
-  - 0.25 µL SuperRNasin
-  - 0.25 µL SSIV
-- Place the mastermix into a PCR strip and into the cycler so that it pre-warms to 42 °C before you start adding it to the samples.
+  - component X
+  - component Y
+  - component Z
+  - Place the mastermix into a PCR strip and into the cycler so that it pre-warms to 42 °C before you start adding it to the samples.
 - Add mastermix to samples while keeping them at 42 °C in the cycler (i.e., don’t take the samples out of the cycles while adding the mix).
 - Incubate at 42 °C for 10 min.
 - Incubate at 50 °C for 30 min.
